@@ -1,103 +1,306 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="Sun zhe"><meta name="renderer" content="webkit"><meta name="copyright" content="Sun zhe"><meta name="keywords" content="Hexo"><meta name="description" content="null"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>mariadb操作日志审计 · undefined</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
-  "use strict";
-  // rel=preload support test
-  if( !w.loadCSS ){
-    w.loadCSS = function(){};
-  }
-  // define on the loadCSS obj
-  var rp = loadCSS.relpreload = {};
-  // rel=preload feature support test
-  // runs once and returns a function for compat purposes
-  rp.support = (function(){
-    var ret;
-    try {
-      ret = w.document.createElement( "link" ).relList.supports( "preload" );
-    } catch (e) {
-      ret = false;
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mariaDB," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="启用MariaDB的审计插件，并调整相关参数 12MariaDB [(none)]&amp;gt; show variables like ‘%audit%‘;Empty set (0.02 sec) 安装MariaDB审计插件 12MariaDB [(none)]&amp;gt; INSTALL PLUGIN server_audit SONAME ‘server_audit‘;Query OK, 0 rows">
+<meta name="keywords" content="mariaDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mariadb操作日志审计">
+<meta property="og:url" content="http://sunzhe.com/post/30ecb4ef.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="启用MariaDB的审计插件，并调整相关参数 12MariaDB [(none)]&amp;gt; show variables like ‘%audit%‘;Empty set (0.02 sec) 安装MariaDB审计插件 12MariaDB [(none)]&amp;gt; INSTALL PLUGIN server_audit SONAME ‘server_audit‘;Query OK, 0 rows">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T05:44:15.911Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mariadb操作日志审计">
+<meta name="twitter:description" content="启用MariaDB的审计插件，并调整相关参数 12MariaDB [(none)]&amp;gt; show variables like ‘%audit%‘;Empty set (0.02 sec) 安装MariaDB审计插件 12MariaDB [(none)]&amp;gt; INSTALL PLUGIN server_audit SONAME ‘server_audit‘;Query OK, 0 rows">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
-    return function(){
-      return ret;
-    };
-  })();
-
-  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-  // then change that media back to its intended value on load
-  rp.bindMediaToggle = function( link ){
-    // remember existing media attr for ultimate state, or default to 'all'
-    var finalMedia = link.media || "all";
-
-    function enableStylesheet(){
-      link.media = finalMedia;
-    }
-
-    // bind load handlers to enable media
-    if( link.addEventListener ){
-      link.addEventListener( "load", enableStylesheet );
-    } else if( link.attachEvent ){
-      link.attachEvent( "onload", enableStylesheet );
-    }
-
-    // Set rel and non-applicable media type to start an async request
-    // note: timeout allows this to happen async to let rendering continue in IE
-    setTimeout(function(){
-      link.rel = "stylesheet";
-      link.media = "only x";
-    });
-    // also enable media after 3 seconds,
-    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-    setTimeout( enableStylesheet, 3000 );
   };
-
-  // loop through link elements in DOM
-  rp.poly = function(){
-    // double check this to prevent external calls from running
-    if( rp.support() ){
-      return;
-    }
-    var links = w.document.getElementsByTagName( "link" );
-    for( var i = 0; i < links.length; i++ ){
-      var link = links[ i ];
-      // qualify links to those with rel=preload and as=style attrs
-      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
-        // prevent rerunning on link
-        link.setAttribute( "data-loadcss", true );
-        // bind listeners to toggle media back
-        rp.bindMediaToggle( link );
-      }
-    }
-  };
-
-  // if unsupported, run the polyfill
-  if( !rp.support() ){
-    // run once at least
-    rp.poly();
-
-    // rerun poly on an interval until onload
-    var run = w.setInterval( rp.poly, 500 );
-    if( w.addEventListener ){
-      w.addEventListener( "load", function(){
-        rp.poly();
-        w.clearInterval( run );
-      } );
-    } else if( w.attachEvent ){
-      w.attachEvent( "onload", function(){
-        rp.poly();
-        w.clearInterval( run );
-      } );
-    }
-  }
+</script>
 
 
-  // commonjs
-  if( typeof exports !== "undefined" ){
-    exports.loadCSS = loadCSS;
-  }
-  else {
-    w.loadCSS = loadCSS;
-  }
-}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/1.jpg"></div><!--.profile-saying
-  i.fa.fa-comment
-  .saying--><div class="cxo-profile-inner"><div class="profile-name">sunzhe</div><div class="profile-signature">for me</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 30vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Sunzhe's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives">Archives</a><a href="/tags">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives">Archives</a><a href="/tags">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">mariadb操作日志审计</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-edit"></i><span>2018/08/23</span></span><span class="busuanzi-pv" id="busuanzi_container_page_pv"><i class="post-intro-calendar fa fa-user-o"></i><span id="busuanzi_value_page_pv"></span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="mariaDB"> mariaDB</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">796</span> | Reading time: <span class="post-count">4</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>启用MariaDB的审计插件，并调整相关参数</p>
+
+  <link rel="canonical" href="http://sunzhe.com/post/30ecb4ef.html"/>
+
+
+
+
+
+  <title>mariadb操作日志审计 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://sunzhe.com/post/30ecb4ef.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sun zhe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mariadb操作日志审计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-23T13:37:27+08:00">
+                2018-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>启用MariaDB的审计插件，并调整相关参数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; show variables like ‘%audit%‘;</span><br><span class="line">Empty set (0.02 sec)</span><br></pre></td></tr></table></figure>
 <p>安装MariaDB审计插件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; INSTALL PLUGIN server_audit SONAME ‘server_audit‘;</span><br><span class="line">Query OK, 0 rows affected (0.41 sec)</span><br></pre></td></tr></table></figure>
@@ -123,13 +326,350 @@
 <p>server_audit_file_rotations=10</p>
 <p>server_audit_excl_users=‘liuwei‘</p>
 <p>重启生效</p>
-</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://sunzhe.com">Sun zhe</a></p><p> <span>Link:  </span><a href="http://sunzhe.com/post/30ecb4ef.html">http://sunzhe.com/post/30ecb4ef.html</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/post/f7646ced.html" title="git pull遇到错误：error: Your local changes to the following files would be overwritten by merge:"><span>< PreviousPost</span><br><span class="prevTitle">git pull遇到错误：error: Your local changes to the following files would be overwritten by merge:</span></a><a class="nextSlogan" href="/post/aea77668.html" title="Centos7.4 安装 Inception"><span>NextPost ></span><br><span class="nextTitle">Centos7.4 安装 Inception</span></a><div class="clear"></div></div><div id="comment"><div id="disqus_thread"></div><script>var unused = null;
-var disqus_config = function () {
-  this.page.url = 'http://sunzhe.com/post/30ecb4ef.html';
-  this.page.identifier = 'post/30ecb4ef.html';
-  this.page.title = 'mariadb操作日志审计';
-}
-var d = document, s = d.createElement('script');
-s.src = "https://" + 'zhesun.disqus.com' +".disqus.com/embed.js";
-s.setAttribute('data-timestamp', '' + +new Date());
-(d.head || d.body).appendChild(s);</script></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 30vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mariaDB/" rel="tag"># mariaDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/aea77668.html" rel="next" title="Centos7.4 安装 Inception">
+                <i class="fa fa-chevron-left"></i> Centos7.4 安装 Inception
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/f7646ced.html" rel="prev" title="git pull遇到错误：error: Your local changes to the following files would be overwritten by merge:">
+                git pull遇到错误：error: Your local changes to the following files would be overwritten by merge: <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Sun zhe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sun zhe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
