@@ -82,7 +82,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="rabbitMQ">
 <meta property="og:url" content="http://sunzhe.com/rabbitMQ/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Sun zhe&#39;s Blog">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2018-08-21T03:50:57.674Z">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
 
 
 
-  <title>rabbitMQ | Hexo</title>
+  <title>rabbitMQ | Sun zhe's Blog</title>
   
 
 
@@ -152,7 +152,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">Sun zhe's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -273,6 +273,9 @@
 
           
 
+  
+    <div class="comments" id="comments">
+    </div>
   
 
 
@@ -550,6 +553,28 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '1QoqPoIumTLoK8dJIwH06DV4-gzGzoHsz',
+        appKey: 'zdBAxN63NGfnjrtKTQ6FItIL',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 

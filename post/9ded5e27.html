@@ -84,7 +84,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux CentOS7 安装 RabbitMQ 3.6.3, Erlang 19.0">
 <meta property="og:url" content="http://sunzhe.com/post/9ded5e27.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Sun zhe&#39;s Blog">
 <meta property="og:description" content="安装erlang   安装依赖环境 yum -y install make gcc gcc-c++ kernel-devel m4 ncurses-devel openssl-devel unixODBC-devel 下载最新 Erlang 19.0 wget http://erlang.org/download/otp_src_19.0.tar.gz 解压 tar -xvzf otp_src_">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2018-08-21T03:54:19.793Z">
@@ -126,7 +126,7 @@
 
 
 
-  <title>linux CentOS7 安装 RabbitMQ 3.6.3, Erlang 19.0 | Hexo</title>
+  <title>linux CentOS7 安装 RabbitMQ 3.6.3, Erlang 19.0 | Sun zhe's Blog</title>
   
 
 
@@ -156,7 +156,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">Sun zhe's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -262,7 +262,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Sun zhe's Blog">
     </span>
 
     
@@ -295,6 +295,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/9ded5e27.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/9ded5e27.html" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -423,6 +433,9 @@
 
           
 
+  
+    <div class="comments" id="comments">
+    </div>
   
 
 
@@ -700,6 +713,28 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '1QoqPoIumTLoK8dJIwH06DV4-gzGzoHsz',
+        appKey: 'zdBAxN63NGfnjrtKTQ6FItIL',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
