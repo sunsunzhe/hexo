@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[centos升级node]]></title>
+    <url>%2Fpost%2F89c3f3c3.html</url>
+    <content type="text"><![CDATA[安装方法: 1.产看node版本，没安装的请先安装；1$ node -v 2.清楚node缓存；1$ sudo npm cache clean -f 3.安装node版本管理工具’n’;1$ sudo npm install n -g 4.使用版本管理工具安装指定node或者升级到最新node版本；123$ sudo n stable （安装node最新版本）$ sudo n 8.9.4 （安装node指定版本8.9.4） 5.使用node -v查看node版本，如果版本号改变为你想要的则升级成功。 若版本号未改变则还需配置node环境变量1.查看通过n安装的node的位置；1$ which node (如：/usr/local/n/versions/node/6.12.3） 2.cd进入/usr/local/n/versions/node/ 你应该能看到你刚通过n安装的node版本这里如：8.9.4；编辑/etc/profile;1$ vim /etc/profile 3.将node安装的路径（这里为：/usr/local/n/versions/node/8.9.4）添加到文件末尾；12345#set node pathexport NODE_HOME=/usr/local/n/versions/node/8.9.4export PATH=$NODE_HOME/bin:$PATH 4.wq退出保存文件，编译/etc/profile;1$ source /etc/profile 5.再次使用node -v查看node版本，不出意外版本号应该变为你想要的。]]></content>
+      <tags>
+        <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[git pull遇到错误：error: Your local changes to the following files would be overwritten by merge:]]></title>
     <url>%2Fpost%2Ff7646ced.html</url>
     <content type="text"><![CDATA[方法1：如果你想保留刚才本地修改的代码，并把git服务器上的代码pull到本地（本地刚才修改的代码将会被暂时封存起来）123git stashgit pull origin mastergit stash pop 方法2、如果你想完全地覆盖本地的代码，只保留服务器端代码，则直接回退到上一个版本，再进行pull： 12git reset --hardgit pull origin master]]></content>
