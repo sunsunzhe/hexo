@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[mysql导出存储过程或函数]]></title>
+    <url>%2Fpost%2F2afb17a8.html</url>
+    <content type="text"><![CDATA[查询数据库中的存储过程和函数 方法一：select name from mysql.proc where db = ‘your_db_name’ and type = ‘PROCEDURE’ //存储过程select name from mysql.proc where db = ‘your_db_name’ and type = ‘FUNCTION’ //函数 方法二：show procedure status; //存储过程show function status; //函数 查看存储过程或函数的创建代码show create procedure proc_name;show create function func_name; mysql导出存储过程或函数： mysqldump -hhostname -uusername -ppassword -ntd -R databasename &gt; backupflie.sql 其中的 -ntd 是表示导出存储过程；-R是表示导出函数。]]></content>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CentOS7使用pip安装mysqlclient提示mysql_config not found]]></title>
+    <url>%2Fpost%2F551f39c7.html</url>
+    <content type="text"><![CDATA[mysqlclient 是Python语言连接MariaDB / MySQL的链接库。Python程序可以使用mysqlclient连接到MariaDB / MySQL数据库，实现对MariaDB / MySQL数据库的操作。mysqlclient是MySQLdb1的一个分支，mysqlclient添加了对Python3的支持，并且修复了一些bug。 1、问题描述当我们使用pip安装mysqlclient时，提示mysql_config not found错误，具体信息如下： 12345678910111213141516(python-django) [anxin@bogon local]# pip install mysqlclientCollecting mysqlclient Downloading mysqlclient-1.3.12.tar.gz (89kB) 100% |████████████████████████████████| 92kB 16kB/s Complete output from command python setup.py egg_info: /bin/sh: mysql_config: 未找到命令 Traceback (most recent call last): File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt; File &quot;/tmp/pip-build-n0gegrlb/mysqlclient/setup.py&quot;, line 17, in &lt;module&gt; metadata, options = get_config() File &quot;/tmp/pip-build-n0gegrlb/mysqlclient/setup_posix.py&quot;, line 44, in get_config libs = mysql_config(&quot;libs_r&quot;) File &quot;/tmp/pip-build-n0gegrlb/mysqlclient/setup_posix.py&quot;, line 26, in mysql_config raise EnvironmentError(&quot;%s not found&quot; % (mysql_config.path,)) OSError: mysql_config not found ` 2、问题原因在你的系统上不存在mysql_config可执行文件，即：没有安装 mariadb 的链接库和头文件软件包。 3、解决方法：mysql_config是mariadb-devel或者mysql-devel包的一部分，mariadb-devel包是mariadb的链接库和头文件，不是mariadb的开发版本。链接库和头文件的版本需要和你安装的数据库版本相符。在使用链接库的情况下，不推荐使用SCL源安装MariaDB / MySQL。 3.1、安装链接库和头文件1）使用CentOS基本源安装的MariaDB / MySQL，使用如下命令安装MariaDB / MySQL链接库 1sudo yum install mariadb-devel #或者 mysql-devel在CentOS7中不存在1sudo yum install mysql-devel 2）使用CentOS IUS源安装的MariaDB / MySQL，安装MariaDB / MySQL对应版本的链接库包 1sudo yum install mariadb101u-devel #或者1sudo yum install mysql57u-devel 3）使用CentOS SCL源安装的MariaDB / MySQL，需要安装其他源（如：Base源，EPEL源，官方源，IUS源）中相应的链接库包（mariadb-devel）。]]></content>
+      <tags>
+        <tag>pip</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[pip安装升级]]></title>
+    <url>%2Fpost%2Fda9bd2de.html</url>
+    <content type="text"><![CDATA[使用get-pip.py进行安装要安装pip，请安全下载get-pip.py。[1]：1curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py 在运行从Web下载的任何脚本时，请确保您已查看过代码，并对它按预期工作而感到高兴。然后运行以下命令：1python get-pip.py 警告 如果您使用的是由操作系统或其他程序包管理器管理的Python安装，请务必小心。get-pip.py不与这些工具协调，可能会使系统处于不一致状态。get-pip.py如果还没有安装setuptools [2]和wheel也安装 它们。setuptools是安装源代码分发所必需的 。虽然两者都不需要安装预制轮子，但两者都是构建轮式缓存（提高安装速度）所必需的。 注意 与pip相同的python版本支持get-pip.py脚本。对于现在不支持Python 2.6中，替代脚本，请 点击这里。 升级PIP 在Linux或macOS上：1pip install -U pip 在Windows上[4]：1python -m pip install -U pip Python和OS兼容性pip适用于CPython版本2.7,3.4,3.5,3.6以及pypy。 这意味着pip适用于每个次要版本的最新补丁版本。尽力而为方法支持以前的修补程序版本。 pip适用于Unix / Linux，macOS和Windows。]]></content>
+      <tags>
+        <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[pip设置阿里云的镜像源，速度超级快]]></title>
+    <url>%2Fpost%2Fd08b91be.html</url>
+    <content type="text"><![CDATA[linux下运行命令1vim ~/.pip/pip.conf 然后写入如下内容并保存123[global]trusted-host = mirrors.aliyun.comindex-url = https://mirrors.aliyun.com/pypi/simple windows:%HOMEPATH%\pip\pip.ini 内容同上]]></content>
+      <tags>
+        <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[centos7 mariaDb5.5 升级到最新版本]]></title>
     <url>%2Fpost%2F514081cc.html</url>
     <content type="text"><![CDATA[1.创建/etc/yum.repos.d/MariaDB.repo文件，这里用到了刚刚发布正式版的10.012345[mariadb]name = MariaDBbaseurl = http://yum.mariadb.org/10.0/centos6-amd64/gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDBgpgcheck=1 2.关闭并卸载旧版本的mariadb，安装新版本的mariadb。1234systemctl stop mariadbyum remove mariadb-server mariadb mariadb-libsyum clean allyum install MariaDB-server MariaDB-client 3.自定义数据目录和服务端口，移除默认的数据目录，创建新的数据目录。12rm -rf /var/lib/mysqlmkdir /var/data/db/mariadb 4.修改配置文件/etc/my.cnf.d/mysql-clients.cnf，重点是[client]，其他的可以参考12345678910111213141516171819[client]port = 3307socket = /var/data/db/mariadb/mysql.sock [mysql]no-auto-rehash [mysqldump]quickmax_allowed_packet = 64M [myisamchk]key_buffer_size = 128Msort_buffer_size = 128Mread_buffer = 2Mwrite_buffer = 2M [mysqlhotcopy]interactive-timeout 5.修改配置文件/etc/my.cnf.d/server.cnf，这里的性能参数来自my-large.ini文件123456789101112131415161718[mysqld]port = 3307datadir = /var/data/db/mariadbsocket = /var/data/db/mariadb/mysql.sockskip-external-lockingkey_buffer_size = 256Mmax_allowed_packet = 64Mtable_open_cache = 256sort_buffer_size = 1Mread_buffer_size = 1Mread_rnd_buffer_size = 4Mmyisam_sort_buffer_size = 64Mthread_cache_size = 8query_cache_size= 16Mthread_concurrency = 8log-bin=mysql-binbinlog_format=mixedserver-id = 1 6.初始化数据12mysql_install_db --defaults-file=/etc/my.cnf --datadir=/var/data/db/mariadb/ --user=mysql7.启动服务 systemctl restart mysql18.设置ROOT密码 mysqladmin -u root password “8888888”19.登陆mysql mysql -uroot -p1210.授权root远程登录root可从任何IP登陆，注意修改密码:&apos;888888&apos; mysql&gt;GRANT ALL PRIVILEGES ON . TO ‘root‘@’%’ IDENTIFIED BY ‘888888’ WITH GRANT OPTION;mysql&gt;FLUSH RIVILEGES;1root可从指定IP登陆，注意修改密码:&apos;888888&apos;、IP:&apos;192.168.1.188&apos; mysql&gt;GRANT ALL PRIVILEGES ON . TO ‘root‘@’192.168.1.188’ IDENTIFIED BY ‘888888’ WITH GRANT OPTION;mysql&gt;FLUSH RIVILEGES;`]]></content>
