@@ -152,18 +152,18 @@
 
 
 
-  <meta name="description" content="1.创建/etc/yum.repos.d/MariaDB.repo文件，这里用到了刚刚发布正式版的10.012345[mariadb]name = MariaDBbaseurl = http://yum.mariadb.org/10.0/centos6-amd64/gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDBgpgcheck=1 2.关闭并卸">
+  <meta name="description" content="1.创建/etc/yum.repos.d/MariaDB.repo文件123456789cat &amp;lt;&amp;lt;EOF | sudo tee -a /etc/yum.repos.d/MariaDB.repo# MariaDB 10.1 CentOS repository list# http://downloads.mariadb.org/mariadb/repositories/[mariadb">
 <meta name="keywords" content="mariadb">
 <meta property="og:type" content="article">
 <meta property="og:title" content="centos7 mariaDb5.5 升级到最新版本">
 <meta property="og:url" content="http://sunzhe.com/post/514081cc.html">
 <meta property="og:site_name" content="Sun zhe&#39;s Blog">
-<meta property="og:description" content="1.创建/etc/yum.repos.d/MariaDB.repo文件，这里用到了刚刚发布正式版的10.012345[mariadb]name = MariaDBbaseurl = http://yum.mariadb.org/10.0/centos6-amd64/gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDBgpgcheck=1 2.关闭并卸">
+<meta property="og:description" content="1.创建/etc/yum.repos.d/MariaDB.repo文件123456789cat &amp;lt;&amp;lt;EOF | sudo tee -a /etc/yum.repos.d/MariaDB.repo# MariaDB 10.1 CentOS repository list# http://downloads.mariadb.org/mariadb/repositories/[mariadb">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-05T01:25:36.013Z">
+<meta property="og:updated_time" content="2018-09-12T01:11:26.291Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="centos7 mariaDb5.5 升级到最新版本">
-<meta name="twitter:description" content="1.创建/etc/yum.repos.d/MariaDB.repo文件，这里用到了刚刚发布正式版的10.012345[mariadb]name = MariaDBbaseurl = http://yum.mariadb.org/10.0/centos6-amd64/gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDBgpgcheck=1 2.关闭并卸">
+<meta name="twitter:description" content="1.创建/etc/yum.repos.d/MariaDB.repo文件123456789cat &amp;lt;&amp;lt;EOF | sudo tee -a /etc/yum.repos.d/MariaDB.repo# MariaDB 10.1 CentOS repository list# http://downloads.mariadb.org/mariadb/repositories/[mariadb">
 
 
 
@@ -416,12 +416,24 @@
                 
               
 
-              <time title="创建时间：2018-09-05 09:12:21 / 修改时间：09:25:36" itemprop="dateCreated datePublished" datetime="2018-09-05T09:12:21+08:00">2018-09-05</time>
+              <time title="创建时间：2018-09-05 09:12:21" itemprop="dateCreated datePublished" datetime="2018-09-05T09:12:21+08:00">2018-09-05</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-09-12 09:11:26" itemprop="dateModified" datetime="2018-09-12T09:11:26+08:00">2018-09-12</time>
               
             
           </span>
@@ -472,7 +484,7 @@
       
 
       
-        <p>1.创建/etc/yum.repos.d/MariaDB.repo文件，这里用到了刚刚发布正式版的10.0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[mariadb]</span><br><span class="line">name = MariaDB</span><br><span class="line">baseurl = http://yum.mariadb.org/10.0/centos6-amd64/</span><br><span class="line">gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB</span><br><span class="line">gpgcheck=1</span><br></pre></td></tr></table></figure></p>
+        <p>1.创建/etc/yum.repos.d/MariaDB.repo文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF | sudo tee -a /etc/yum.repos.d/MariaDB.repo</span><br><span class="line"># MariaDB 10.1 CentOS repository list</span><br><span class="line"># http://downloads.mariadb.org/mariadb/repositories/</span><br><span class="line">[mariadb]</span><br><span class="line">name = MariaDB</span><br><span class="line">baseurl = https://mirrors.tuna.tsinghua.edu.cn/mariadb/mariadb-10.1.25/yum/rhel7-amd64</span><br><span class="line">gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB</span><br><span class="line">gpgcheck=0</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
 <p>2.关闭并卸载旧版本的mariadb，安装新版本的mariadb。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop mariadb</span><br><span class="line">yum remove mariadb-server mariadb mariadb-libs</span><br><span class="line">yum clean all</span><br><span class="line">yum install MariaDB-server MariaDB-client</span><br></pre></td></tr></table></figure></p>
 <p>3.自定义数据目录和服务端口，移除默认的数据目录，创建新的数据目录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /var/lib/mysql</span><br><span class="line">mkdir /var/data/db/mariadb</span><br></pre></td></tr></table></figure></p>
 <p>4.修改配置文件/etc/my.cnf.d/mysql-clients.cnf，重点是[client]，其他的可以参考<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[client]</span><br><span class="line">port        = 3307</span><br><span class="line">socket      = /var/data/db/mariadb/mysql.sock</span><br><span class="line"> </span><br><span class="line">[mysql]</span><br><span class="line">no-auto-rehash</span><br><span class="line"> </span><br><span class="line">[mysqldump]</span><br><span class="line">quick</span><br><span class="line">max_allowed_packet = 64M</span><br><span class="line"> </span><br><span class="line">[myisamchk]</span><br><span class="line">key_buffer_size = 128M</span><br><span class="line">sort_buffer_size = 128M</span><br><span class="line">read_buffer = 2M</span><br><span class="line">write_buffer = 2M</span><br><span class="line"> </span><br><span class="line">[mysqlhotcopy]</span><br><span class="line">interactive-timeout</span><br></pre></td></tr></table></figure></p>
@@ -600,7 +612,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
