@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Gitlab之邮箱配置]]></title>
     <url>%2Fpost%2Fdd7d75c9.html</url>
-    <content type="text"><![CDATA[配置gitlab123456789101112vim /etc/gitlab/gitlab.rbgitlab_rails[&apos;smtp_enable&apos;] = truegitlab_rails[&apos;smtp_address&apos;] = &quot;smtp.aliyun.com&quot;gitlab_rails[&apos;smtp_port&apos;] = 465gitlab_rails[&apos;smtp_user_name&apos;] = &quot;yqfood@aliyun.com&quot;gitlab_rails[&apos;smtp_password&apos;] = &quot;yq2018.com&quot;gitlab_rails[&apos;smtp_authentication&apos;] = &quot;login&quot;gitlab_rails[&apos;smtp_enable_starttls_auto&apos;] = truegitlab_rails[&apos;smtp_tls&apos;] = truegitlab_rails[&apos;gitlab_email_enabled&apos;] = truegitlab_rails[&apos;gitlab_email_from&apos;] = &apos;yqfood@aliyun.com&apos;gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;Gitlab&apos;]]></content>
+    <content type="text"><![CDATA[配置gitlab123456789101112vim /etc/gitlab/gitlab.rbgitlab_rails[&apos;smtp_enable&apos;] = truegitlab_rails[&apos;smtp_address&apos;] = &quot;smtp.aliyun.com&quot;gitlab_rails[&apos;smtp_port&apos;] = 465gitlab_rails[&apos;smtp_user_name&apos;] = &quot;xxxx@aliyun.com&quot;gitlab_rails[&apos;smtp_password&apos;] = &quot;xxxxxxxx&quot;gitlab_rails[&apos;smtp_authentication&apos;] = &quot;login&quot;gitlab_rails[&apos;smtp_enable_starttls_auto&apos;] = truegitlab_rails[&apos;smtp_tls&apos;] = truegitlab_rails[&apos;gitlab_email_enabled&apos;] = truegitlab_rails[&apos;gitlab_email_from&apos;] = &apos;xxxx@aliyun.com&apos;gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;Gitlab&apos;]]></content>
       <tags>
         <tag>gitlab</tag>
       </tags>
