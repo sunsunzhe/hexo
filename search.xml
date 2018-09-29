@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Gitlab之邮箱配置]]></title>
+    <url>%2Fpost%2Fdd7d75c9.html</url>
+    <content type="text"><![CDATA[配置gitlab123456789101112vim /etc/gitlab/gitlab.rbgitlab_rails[&apos;smtp_enable&apos;] = truegitlab_rails[&apos;smtp_address&apos;] = &quot;smtp.aliyun.com&quot;gitlab_rails[&apos;smtp_port&apos;] = 465gitlab_rails[&apos;smtp_user_name&apos;] = &quot;yqfood@aliyun.com&quot;gitlab_rails[&apos;smtp_password&apos;] = &quot;yq2018.com&quot;gitlab_rails[&apos;smtp_authentication&apos;] = &quot;login&quot;gitlab_rails[&apos;smtp_enable_starttls_auto&apos;] = truegitlab_rails[&apos;smtp_tls&apos;] = truegitlab_rails[&apos;gitlab_email_enabled&apos;] = truegitlab_rails[&apos;gitlab_email_from&apos;] = &apos;yqfood@aliyun.com&apos;gitlab_rails[&apos;gitlab_email_display_name&apos;] = &apos;Gitlab&apos;]]></content>
+      <tags>
+        <tag>gitlab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[gitlab 11 中文设置]]></title>
+    <url>%2Fpost%2Ffc41e81.html</url>
+    <content type="text"><![CDATA[手动下载zip包 https://gitlab.com/xhang/gitlab.git123cd /usr/local/src Wget https://gitlab.com/xhang/gitlab/-/archive/11-1-stable-zh/gitlab-11-1-stable-zh.tar.gzunzip gitlab-v11.1.0-zh.zip 解压之后查看版本123cat gitlab-v11.1.0-zh/VERSION11.1.0 跟英文版相比对，如果版本一样，进行下面 ##备份英文版 12 cp -r /opt/gitlab/embedded/service/gitlab-rails&#123;,.ori&#125; ##中文版覆盖英文版123456789cp -rf gitlab-v11.1.0-zh/* /opt/gitlab/embedded/service/gitlab-rails/重新配置gitlabgitlab-ctl reconfigure重启启动gitlabgitlab-ctl restart]]></content>
+      <tags>
+        <tag>gitlab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Nexus搭建开发组的私有仓库]]></title>
+    <url>%2Fpost%2Fe43e4e60.html</url>
+    <content type="text"><![CDATA[一、私有仓库的价值 开发Java应用系统，用到Maven、sbt和 Gradle等构建工具，在构建过程中一般需要从互联网下载依赖库，构建私有仓库就是为了在开发组或者部门内共用，从而节省整体的下载成本和构建成本。下面先以Maven为例说明。 Maven是一个强大的构建工具，一般用于Java项目。Maven项目基于对象模型(POM)，可以通过一小段描述信息来管理项目的构建，报告和文档的软件项目管理工具。Maven 除了以程序构建能力为特色之外，还提供高级项目管理工具。由于 Maven 的缺省构建规则有较高的可重用性，所以常常用两三行 Maven 构建脚本就可以构建简单的项目。 Maven的Java项目一般需要下载第三方组件，下载后构成本地仓库，为了减少网络对构建项目的影响，一般会构建私服仓库，代理第三方库。Nexus就是构建私服仓库的优秀软件。 二、准备工作2.1、安装Java编译环境Java编译环境包括核心的JDK和编译工具，因为Java的编译工具有很多种，而开源项目作者的随意性很高，常用的工具有maven，gradle,sbt，ant等等，本文关注Maven。 因为Oracle不再维护Java1.7，所以采用Java 1.8作为编译核心. 2.1.1、安装操作系统采用Centos7.4 yum install java-1.8.0-openjdk-devel java-1.8.0-openjdk java-1.8.0-openjdk-headless -y 2.1.2、验证查看jdk版本号 123456java -versionPicked up _JAVA_OPTIONS: -Xmx2048m -XX:MaxMetaspaceSize=512m -Djava.awt.headless=trueopenjdk version &quot;1.8.0_131&quot;OpenJDK Runtime Environment (build 1.8.0_131-b12)OpenJDK 64-Bit Server VM (build 25.131-b12, mixed mode) 三、安装Nexus3.1、下载nexus从官方网站现在最新3.X版 https://www.sonatype.com/download-oss-sonatype 下载（2018年3月）最新版nexus-3.9.0-01-unix.tar.gz （） 3.2、部署先规划存储私有仓库的目录，作者本机的/opt目录空间较多，所以以/opt为例12cd /opt/scmtar -xf ~/download/nexus-3.9.0-01-unix.tar.gz -C . 生成两个目录 nexus-3.9.0-01sonatype-work 3.3、系统服务1、编辑系统服务文件12345678910111213141516vi /etc/systemd/system/nexus.service[Unit]Description=nexus serviceAfter=network.target[Service]Type=forkingLimitNOFILE=65536ExecStart=/opt/scm/nexus-3.9.0-01/bin/nexus startExecStop=/opt/scm/nexus-3.9.0-01/bin/nexus stopUser=ansibleRestart=on-abort[Install]WantedBy=multi-user.target 2、设置为自启动服务1234sudo systemctl daemon-reloadsudo systemctl start nexus.servicesudo systemctl status nexus.servicesudo systemctl enable nexus.service 四、设置Nexus浏览器登录http://192.168.154.11:8081/ 用户名的密码为：admin admin123]]></content>
+      <tags>
+        <tag>nexus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[解决 libev.so.4()(64bit) is needed by percona-xtrabackup-2.3.4-1.el6.x86_64]]></title>
+    <url>%2Fpost%2F2053e6f2.html</url>
+    <content type="text"><![CDATA[到http://rpmfind.net/linux/rpm2html/search.php?query=libev.so.4%28%29%2864bit%29&amp;submit=Search+...&amp;system=&amp;arch= 下载操作系统对应的libev包，注意系统号与版本位数 1234wget ftp://rpmfind.net/linux/dag/redhat/el6/en/x86_64/dag/RPMS/libev-4.15-1.el6.rf.x86_64.rpmrpm -qa|grep libev (查找自带包)rpm -e libev**********（卸载自带包）rpm -ivh libev-4.15-1.el6.rf.x86_64.rpm]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hexo链接持久化]]></title>
+    <url>%2Fpost%2Ff5e46ae8.html</url>
+    <content type="text"><![CDATA[1npm install hexo-abbrlink --save 站点配置文件里:1234permalink: post/:abbrlink.htmlabbrlink: alg: crc32 # 算法：crc16(default) and crc32 rep: hex # 进制：dec(default) and hex 另外可以修改scaffolds里的模版文件，修改post.md为:1234567---title: &#123;&#123; title &#125;&#125;date: &#123;&#123; date &#125;&#125;comments: truecategories:tags:--- 不建议的写法有的人采用了md文件的名字是英文，在Front-matter里将title写成正常的中文呢，这个将来文章多了，都是英文不利于收藏整理。]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[elasticsearch6.3.1 启用x-pack]]></title>
+    <url>%2Fpost%2F89755df8.html</url>
+    <content type="text"><![CDATA[**前言elasticsearch6.3.1安装包中已经集成了x-pack插件，无需使用elasticsearch-plugin install来安装x-pack，我们需要做的是使x-pack工作 步骤： 1、运行elasticsearch2、启用trial license（30天试用）1curl -H &quot;Content-Type:application/json&quot; -XPOST http://192.168.36.61:9200/_xpack/license/start_trial?acknowledge=true 可以看到elasticsearch控制台显示license 已变为trial 3、设置用户名密码1命令：bin/elasticsearch-setup-passwords interactive 修改密码方式：1curl -H &quot;Content-Type:application/json&quot; -XPOST -u elastic &apos;http://192.168.36.61:9200/_xpack/security/user/elastic/_password&apos; -d &apos;&#123; &quot;password&quot; : &quot;123456&quot; &#125;&apos; 4、elasticsearch.yml中开启安全验证配置此时访问http://192.168.36.61:9200 并不需要输入账号密码，需elasticsearch.yml中添加如下配置： xpack.security.enabled: true重启elasticsearch之后http://192.168.36.61:9200就需要使用账号验证了 head插件访问首先在elasticsearch.yml中添加配置： http.cors.enabled: true http.cors.allow-origin: “*” http.cors.allow-headers: Authorization,X-Requested-With,Content-Length,Content-Type访问head的时候带上用户名跟密码：http://192.168.36.61:9100/?auth_user=elastic&amp;auth_password=passwd]]></content>
+      <tags>
+        <tag>elk</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[yum 安装mysql]]></title>
+    <url>%2Fpost%2F88d36c2c.html</url>
+    <content type="text"><![CDATA[在Red Hat Enterprise Linux和CentOS上安装Percona Server1.yum在线安装123yum install http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpmyum list | grep perconayum install Percona-Server-server-57 2.rpm包安装1234$ wget https://www.percona.com/downloads/Percona-Server-5.7/Percona-Server-5.7.10-3/binary/redhat/7/x86_64/Percona-Server-5.7.10-3-r63dafaf-el7-x86_64-bundle.tar$ tar xvf Percona-Server-5.7.10-3-r63dafaf-el7-x86_64-bundle.tar$ ls *.rpm$ rpm -ivh *.rpm]]></content>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[centos7 安装最新版mariadb10.1]]></title>
     <url>%2Fpost%2Fd448c105.html</url>
     <content type="text"></content>
@@ -135,9 +192,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[git pull遇到错误：error: Your local changes to the following files would be overwritten by merge:]]></title>
+    <title><![CDATA[git 使用及错误]]></title>
     <url>%2Fpost%2Ff7646ced.html</url>
-    <content type="text"><![CDATA[方法1：如果你想保留刚才本地修改的代码，并把git服务器上的代码pull到本地（本地刚才修改的代码将会被暂时封存起来）123git stashgit pull origin mastergit stash pop 方法2、如果你想完全地覆盖本地的代码，只保留服务器端代码，则直接回退到上一个版本，再进行pull： 12git reset --hardgit pull origin master]]></content>
+    <content type="text"><![CDATA[1.保存修改的代码并更新方法1：如果你想保留刚才本地修改的代码，并把git服务器上的代码pull到本地（本地刚才修改的代码将会被暂时封存起来）123git stashgit pull origin mastergit stash pop 方法2、如果你想完全地覆盖本地的代码，只保留服务器端代码，则直接回退到上一个版本，再进行pull： 12git reset --hardgit pull origin master 2.fatal: unable to access ‘: Peer reports incompatible or unsupported protocol version\1yum update -y nss curl libcurl]]></content>
       <tags>
         <tag>git</tag>
       </tags>
